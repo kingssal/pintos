@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "*.js": "javascriptreact",
+        "robot.h": "c",
+        "aw_thread.h": "c",
+        "thread.h": "c",
+        "string.h": "c",
+        "synch.h": "c",
+        "aw_manager.h": "c"
+    }
+}
