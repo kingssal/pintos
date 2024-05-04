@@ -8,5 +8,5 @@
         "string.h": "c",
         "synch.h": "c",
         "aw_manager.h": "c"
-    }
+    },
 }

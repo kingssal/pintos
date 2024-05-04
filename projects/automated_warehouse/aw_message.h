@@ -7,19 +7,19 @@
  */
 struct message {
     //
-    // To central control node
+    // 중앙 관제 노드에게 보내는 메시지
     //
-    /** current row of robot */
+    /** 현재 로봇의 row */
     int row;
-    /** current column of robot */
+    /** 현재 로봇의 column */
     int col;
-    /** current payload of robot */
+    /** 현재 로봇의 current_payload */
     int current_payload;
     /** required paylod of robot */
     int required_payload;
 
     //
-    // To robots
+    // 로봇에게 보내는 메시지
     //
     /** next command for robot */
     int cmd;
@@ -27,17 +27,26 @@ struct message {
 
 /** 
  * Simple message box which can receive only one message from sender
+ * 센더로부터 오직 한개의 메시지를 받을 수 있는 메시지 박스
 */
 struct messsage_box {
-    /** check if the message was written by others */
+    /** check if the message was written by others
+     *  메시지가 다른이로부터 오는 걸 방지
+     *  데이터가 최근에 업데이트 되었는지를 나타냄
+     *  플레그가 설정되어 있으면 데이터가 최신
+     */
     int dirtyBit;
-    /** stored message */
+    /** stored message 안에 들은 메시지 */
     struct message msg;
 };
 
-/** message boxes from central control node to each robot */
+/** message boxes from central control node to each robot 
+ *  중앙 관제 노드가 각 로봇에게 할당하는 메시지 박스
+*/
 extern struct messsage_box* boxes_from_central_control_node;
-/** message boxes from robots to central control node */
+/** message boxes from robots to central control node 
+ * 로봇이 중앙 관제 노드로 보내는 메시지 박스
+*/
 extern struct messsage_box* boxes_from_robots;
 
 #endif

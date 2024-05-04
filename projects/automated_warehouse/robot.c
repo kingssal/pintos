@@ -8,6 +8,6 @@ void setRobot(struct robot* _robot, const char* name, int row, int col, int requ
     _robot->name = name;
     _robot->row = row;
     _robot->col = col;
-    _robot->required_payload = required_payload; // 하역해야할 장소
-    _robot->current_payload = current_payload;  // 현재 갖고 있는 화물?
+    _robot->required_payload = required_payload; // 적재 해야할 화물
+    _robot->current_payload = current_payload;  // 현재 위치하고 있는 화물 위치, required랑 다르면 이동을 해야함
 }
