@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "threads/init.h"
 #include "threads/malloc.h"
@@ -9,6 +10,7 @@
 #include "devices/timer.h"
 
 #include "projects/automated_warehouse/aw_manager.h"
+#include "projects/automated_warehouse/automated_warehouse.h"
 #include "projects/automated_warehouse/aw_message.h"
 
 #define _POSIX_C_SOURCE 200809L
@@ -67,33 +69,33 @@ void determine_robot_cmd(int robot_id, struct message robot_msg)
     */
 
     // 목표 위치 계산 로직, 아래 if문들 아래로 들어감
-    int target_row, target_col;
+    int target_row = 0, target_col = 0;
 
-    int target_char = destination[robot_id][1];        // 목적지 문자 A
+    int target_char =  (int)destination[robot_id][1];         // 목적지 문자 A
     int target_number = destination[robot_id][0] - '0'; // 목적지 숫자 2
 
     if (robot_msg.current_payload == 0)
     {
         // 목적지의 위치를 파악하고 장애물을 파악하고 현재 위치로부터 상하좌우 명령
         // 목적지는 required_payload 위치가 됨
-        find_target_position(robot_msg.required_payload, target_row, target_col);
-        send_command_to_robot(robot_id, target_row, target_col);
+        find_target_position(robot_msg.required_payload, &target_row, &target_col);
+        send_cmd_to_robot(robot_id, target_row, target_col);
     }
     else if (robot_msg.current_payload != robot_msg.required_payload)
     {
         // 1과 동일하게 한다
-        find_target_position(robot_msg.required_payload, target_row, target_col);
-        send_command_to_robot(robot_id, target_row, target_col);
+        find_target_position(robot_msg.required_payload, &target_row, &target_col);
+        send_cmd_to_robot(robot_id, target_row, target_col);
     }
     else if (robot_msg.current_payload == robot_msg.required_payload)
     {
         printf("화물 적재 완료!");
-        find_target_position(target_char, target_row, target_col);
-        send_command_to_robot(robot_id, target_row, target_col);
+        find_target_position(target_char, &target_row, &target_col);
+        send_cmd_to_robot(robot_id, target_row, target_col);
     }
     else if (robots[robot_id].row == target_row && robots[robot_id].col == target_col)
     {
-        find_target_position(target_char, target_row, target_col);
+        find_target_position(target_char, &target_row, &target_col);
         // 로봇이 목적지에 도달하고 화물을 적재했다면
         printf("Robot R%d has completed its task at (%d, %d).\n", robot_id, target_row, target_col);
     }
@@ -290,13 +292,13 @@ void run_automated_warehouse(char **argv)
 
     // 목적지
     char *input_str = strdup(argv[2]);
-    char *token = strtok(input_str, ":");
+    char *token;
+    char *rest = input_str;
 
-    while (token != NULL && num_robots < 5)
+    while ((token = strtok_r(rest, ":", &rest)) != NULL && num_robots < 5)
     {
         destination[num_robots] = strdup(token); // 각 목적지를 저장
-        token = strtok(NULL, ":");
-        num_robots++; // 로봇의 수가 결정됨
+        num_robots++;                            // 로봇의 수가 결정됨
     }
 
     printf("implement automated warehouse!\n");

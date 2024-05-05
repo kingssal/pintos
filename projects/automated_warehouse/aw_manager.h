@@ -26,6 +26,6 @@ void init_automated_warehouse(char** argv);
 
 void print_map(struct robot* __robots, int __number_of_robots);
 
-void increase_step();
+void increase_step(void);
 
 #endif

@@ -14,6 +14,9 @@
 
 
 struct list blocked_threads; //멀티쓰레딩 환경에서 특정 스레드들이 블럭될 때 관리하기 위한 구조체
+void block_thread(void);
+
+void unblock_threads(void);
 
 /**
  * 아래 함수들은 로봇 쓰레드와 중앙 관제 노드 쓰레드간의 동기화 및 상태 관리를 위한 구조 제공
