@@ -29,7 +29,7 @@ struct message {
  * Simple message box which can receive only one message from sender
  * 센더로부터 오직 한개의 메시지를 받을 수 있는 메시지 박스
 */
-struct messsage_box {
+struct message_box {
     /** check if the message was written by others
      *  메시지가 다른이로부터 오는 걸 방지
      *  데이터가 최근에 업데이트 되었는지를 나타냄
@@ -43,10 +43,10 @@ struct messsage_box {
 /** message boxes from central control node to each robot 
  *  중앙 관제 노드가 각 로봇에게 할당하는 메시지 박스
 */
-extern struct messsage_box* boxes_from_central_control_node;
+extern struct message_box* boxes_from_central_control_node;
 /** message boxes from robots to central control node 
  * 로봇이 중앙 관제 노드로 보내는 메시지 박스
 */
-extern struct messsage_box* boxes_from_robots;
+extern struct message_box* boxes_from_robots;
 
 #endif

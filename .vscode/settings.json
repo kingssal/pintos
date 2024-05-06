@@ -8,6 +8,8 @@
         "string.h": "c",
         "synch.h": "c",
         "aw_manager.h": "c",
-        "automated_warehouse.h": "c"
+        "automated_warehouse.h": "c",
+        "aw_message.h": "c",
+        "syscall.h": "c"
     },
 }
